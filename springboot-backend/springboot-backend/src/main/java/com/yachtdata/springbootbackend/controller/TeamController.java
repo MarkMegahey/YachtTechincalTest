@@ -10,11 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(
-        origins = {"http://localhost:3000/"}
-)
+@CrossOrigin(origins="http://localhost:3000/")
 @RestController
-@RequestMapping({"api/"})
+@RequestMapping("api/")
 public class TeamController {
     @Autowired
     private TeamRepository teamRepository;
@@ -22,12 +20,12 @@ public class TeamController {
     public TeamController() {
     }
 
-    @GetMapping({"allTeams"})
+    @GetMapping("allTeams")
     public List<Team> getAllTeams() {
         return this.teamRepository.findAll();
     }
 
-    @RequestMapping({"team"})
+    @RequestMapping("team")
     public Team getTeam(@RequestParam String name) {
         return this.teamRepository.findByName(name);
     }

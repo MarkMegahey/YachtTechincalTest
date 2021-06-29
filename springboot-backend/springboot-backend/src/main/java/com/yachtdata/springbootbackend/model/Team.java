@@ -7,14 +7,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(
-        name = "team"
-)
+@Table(name = "team")
 public class Team {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long teamId;
     private String name;
     private Long marker;

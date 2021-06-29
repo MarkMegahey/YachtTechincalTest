@@ -19,13 +19,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class StacheLagBackendApplication implements CommandLineRunner {
+
 	@Autowired
 	private TeamRepository teamRepository;
+
 	@Autowired
 	private PositionRepository positionRepository;
-
-	public StacheLagBackendApplication() {
-	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(StacheLagBackendApplication.class, args);
@@ -38,22 +37,12 @@ public class StacheLagBackendApplication implements CommandLineRunner {
 		try {
 			FileReader reader = new FileReader(filePath + "/springboot-backend/src/main/resources/data/positions.json");
 
-			try {
-				Object obj = jsonParser.parse(reader);
-				JSONObject teamsData = (JSONObject)obj;
-				JSONArray teams = (JSONArray)teamsData.get("teams");
-				teams.forEach((team) -> {
-					this.parseTeamObject((JSONObject)team);
-				});
-			} catch (Throwable var9) {
-				try {
-					reader.close();
-				} catch (Throwable var8) {
-					var9.addSuppressed(var8);
-				}
-
-				throw var9;
-			}
+			Object obj = jsonParser.parse(reader);
+			JSONObject teamsData = (JSONObject)obj;
+			JSONArray teams = (JSONArray)teamsData.get("teams");
+			teams.forEach((team) -> {
+				this.parseTeamObject((JSONObject)team);
+			});
 
 			reader.close();
 		} catch (FileNotFoundException var10) {
@@ -69,6 +58,7 @@ public class StacheLagBackendApplication implements CommandLineRunner {
 	private void parseTeamObject(JSONObject team) {
 		Team newTeam = new Team((Long)team.get("marker"), (String)team.get("name"), (Long)team.get("serial"));
 		this.teamRepository.save(newTeam);
+
 		JSONArray positions = (JSONArray)team.get("positions");
 		positions.forEach((position) -> {
 			this.parsePositionObject(newTeam, (JSONObject)position);

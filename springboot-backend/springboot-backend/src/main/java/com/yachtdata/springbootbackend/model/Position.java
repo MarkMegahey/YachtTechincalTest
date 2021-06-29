@@ -9,17 +9,15 @@ import javax.persistence.Table;
 import org.json.simple.JSONObject;
 
 @Entity
-@Table(
-        name = "position"
-)
+@Table(name = "position")
 public class Position {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long positionId;
+
     @ManyToOne
     private Team team;
+
     private Boolean alert;
     private Long altitude;
     private String type;
